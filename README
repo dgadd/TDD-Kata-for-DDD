@@ -16,9 +16,13 @@ Batch
 Transaction
 Value Object: Address
 
-Don't get caught up on "every choice here must be perfect DDD".
 Treat this as a process exercise for thinking about doing DDD in kata format.
 Once you've done it once, feel free to alter those choices you would do differently.
+
+To encapsulate your collections below:
+a) use field: private IList<T> _myCollection
+b) instantiate in constructor as List<T>
+c) expose read-only property as IEnumerable<T>
 
 The DDD Kata steps:
 1) Gym is an instance of EntityBase.
@@ -49,5 +53,6 @@ The DDD Kata steps:
         to Transaction's NetAmount.
      b) after running a new Batch and Transaction record have been created 
         with Transaction.Amount = Customer.PackagePrice.
+23) Adding a manual charge for a Customer from Ontario throws an exception.
         
 [end]

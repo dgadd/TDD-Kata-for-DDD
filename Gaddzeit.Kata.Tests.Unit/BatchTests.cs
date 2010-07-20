@@ -21,16 +21,16 @@ namespace Gaddzeit.Kata.Tests.Unit
         public void TransactionProperty_Getter_HasCountOf0()
         {
             var sut = new Batch();
-            Assert.AreEqual(0, sut.Transactions.Count);
+            Assert.AreEqual(0, sut.Transactions.Count());
         }
 
         [Test]
         public void AddTransactionMethod_TransactionInput_IncrementsCount()
         {
             var sut = new Batch();
-            Assert.AreEqual(0, sut.Transactions.Count);
+            Assert.AreEqual(0, sut.Transactions.Count());
             sut.AddTransaction(new Transaction {Id = 91352, Amount = 10.01M});
-            Assert.AreEqual(1, sut.Transactions.Count);            
+            Assert.AreEqual(1, sut.Transactions.Count());            
         }
 
         [Test]

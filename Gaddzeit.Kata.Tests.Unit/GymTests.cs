@@ -21,16 +21,16 @@ namespace Gaddzeit.Kata.Tests.Unit
         public void MonthlyPackagesProperty_Getter_HasCountOf0()
         {
             var sut = new Gym();
-            Assert.AreEqual(0, sut.MonthlyPackages.Count);
+            Assert.AreEqual(0, sut.MonthlyPackages.Count());
         }
 
         [Test]
         public void AddMonthlyPackageMethod_MonthlyPackageInput_IncrementsMonthlyPackagesCount()
         {
             var sut = new Gym();
-            Assert.AreEqual(0, sut.MonthlyPackages.Count);
+            Assert.AreEqual(0, sut.MonthlyPackages.Count());
             sut.AddMonthlyPackage(new MonthlyPackage());
-            Assert.AreEqual(1, sut.MonthlyPackages.Count);     
+            Assert.AreEqual(1, sut.MonthlyPackages.Count());     
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Gaddzeit.Kata.Tests.Unit
             var customer = new Customer {Id = 91352, MonthlyPackage = monthlyPackage};
             var sut = new Gym();
             var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
-            Assert.AreEqual(customer.PackagePrice, batch.Transactions[0].Amount);
+            Assert.AreEqual(customer.PackagePrice, batch.TotalAmount);
         }
 
         [Test]
@@ -62,5 +62,17 @@ namespace Gaddzeit.Kata.Tests.Unit
             var sut = new Gym();
             var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
         }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "A manual charge cannot be run for Ontario customers.")]
+        public void ManuallyGenerateMonthlyChargeMethod_CustomerIsFromOntario_ThrowsException()
+        {
+            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = 9.20M };
+            var address = new Address("1234 Happy St", "Toronto", "Ontario");
+            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage, Address = address};
+            var sut = new Gym();
+            var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
+        }
+
     }
 }

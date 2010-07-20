@@ -1,20 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Gaddzeit.Kata.Domain
 {
     public class Batch : EntityBase
     {
-        private List<Transaction> _transactions;
+        private readonly IList<Transaction> _transactions;
 
         public Batch()
         {
             _transactions = new List<Transaction>();
         }
 
-        public List<Transaction> Transactions
+        public IEnumerable<Transaction> Transactions
         {
             get { return _transactions; }
+        }
+
+        public decimal TotalAmount
+        {
+            get
+            {
+                return _transactions.Sum(transaction => transaction.Amount);
+            }
         }
 
         public void AddTransaction(Transaction transaction)
