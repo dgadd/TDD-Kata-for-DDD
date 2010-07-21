@@ -54,5 +54,37 @@ namespace Gaddzeit.Kata.Tests.Unit
             sut.AddTransaction(transaction);
         }
 
+        [Test]
+        public void CreateTransactionForCustomerPackageMethod_CustomerPackageInput_GeneratesBatchWithTransaction()
+        {
+            const decimal price = 12.20M;
+            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = price };
+            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage };
+            var sut = new Batch();
+            sut.ManuallyGenerateMonthlyChargeFor(customer, DateTime.Today);
+            Assert.IsTrue(sut.TransactionsContainsChargeOf(price));
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException), ExpectedMessage = "A transaction charge must be at least $10.")]
+        public void ManuallyGenerateMonthlyChargeMethod_CustomerPackagePriceLessThanTenDollars_ThrowsException()
+        {
+            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = 9.20M };
+            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage };
+            var sut = new Batch();
+            sut.ManuallyGenerateMonthlyChargeFor(customer, DateTime.Today);
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "A manual charge cannot be run for Ontario customers.")]
+        public void ManuallyGenerateMonthlyChargeMethod_CustomerIsFromOntario_ThrowsException()
+        {
+            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = 9.20M };
+            var address = new Address("1234 Happy St", "Toronto", "Ontario");
+            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage, Address = address };
+            var sut = new Batch();
+            sut.ManuallyGenerateMonthlyChargeFor(customer, DateTime.Today);
+        }
+
     }
 }

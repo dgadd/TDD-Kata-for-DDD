@@ -43,36 +43,5 @@ namespace Gaddzeit.Kata.Tests.Unit
             sut.AddMonthlyPackage(monthlyPackage1);
         }
 
-        [Test]
-        public void ManuallyGenerateMonthlyChargeMethod_CustomerAndDateInputs_ReturnsBatch()
-        {
-            var monthlyPackage = new MonthlyPackage {Id = 1235, Name = "Top Fit", Price = 35.00M};
-            var customer = new Customer {Id = 91352, MonthlyPackage = monthlyPackage};
-            var sut = new Gym();
-            var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
-            Assert.AreEqual(customer.PackagePrice, batch.TotalAmount);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentException), ExpectedMessage = "A transaction charge must be at least $10.")]
-        public void ManuallyGenerateMonthlyChargeMethod_CustomerPackagePriceLessThanTenDollars_ThrowsException()
-        {
-            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = 9.20M };
-            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage };
-            var sut = new Gym();
-            var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
-        }
-
-        [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "A manual charge cannot be run for Ontario customers.")]
-        public void ManuallyGenerateMonthlyChargeMethod_CustomerIsFromOntario_ThrowsException()
-        {
-            var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = 9.20M };
-            var address = new Address("1234 Happy St", "Toronto", "Ontario");
-            var customer = new Customer { Id = 91352, MonthlyPackage = monthlyPackage, Address = address};
-            var sut = new Gym();
-            var batch = sut.ManuallyGenerateMonthlyCharge(customer, DateTime.Today);
-        }
-
     }
 }

@@ -11,7 +11,7 @@ namespace Gaddzeit.Kata.Tests.Unit
     public class CustomerTests
     {
         [Test]
-        public void Constructor_NoInputParams_ThrowsException()
+        public void Constructor_NoInputParams_IsInstanceOfEntityBase()
         {
             var sut = new Customer();
             Assert.IsInstanceOfType(typeof(EntityBase), sut);
