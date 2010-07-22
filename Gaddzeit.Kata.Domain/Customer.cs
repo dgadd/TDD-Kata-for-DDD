@@ -17,7 +17,7 @@ namespace Gaddzeit.Kata.Domain
             get { return this.MonthlyPackage.Price; }
         }
 
-        public Batch BillCustomerForMonthlyCharge(DateTime today)
+        public Batch BillForMonthlyCharge(DateTime today)
         {
             DisallowManualChargesForOntarioCustomers(this);
             var transaction = new Transaction { Id = 3945, Amount = this.PackagePrice };
