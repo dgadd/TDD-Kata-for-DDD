@@ -58,7 +58,7 @@ namespace Gaddzeit.Kata.Tests.Unit
             const decimal price = 12.20M;
             var monthlyPackage = new MonthlyPackage { Id = 1235, Name = "Top Fit", Price = price };
             var sut = new Customer { Id = 91352, MonthlyPackage = monthlyPackage };
-            Batch batch = sut.BillForMonthlyCharge(DateTime.Today);
+            var batch = sut.BillForMonthlyCharge(DateTime.Today);
             Assert.IsTrue(batch.TransactionsContainsChargeOf(price));
         }
 
