@@ -41,21 +41,6 @@ namespace Gaddzeit.Kata.Domain
                 throw new ArgumentException("You cannot add duplicate transactions.");
         }
 
-        public void ManuallyGenerateMonthlyChargeFor(Customer customer, DateTime today)
-        {
-            DisallowManualChargesForOntarioCustomers(customer);
-            var transaction = new Transaction { Id = 3945, Amount = customer.PackagePrice };
-            this.AddTransaction(transaction);
-        }
-
-        private static void DisallowManualChargesForOntarioCustomers(Customer customer)
-        {
-            if (customer.Address != null
-               && !string.IsNullOrEmpty(customer.Address.Province)
-               && customer.Address.Province.Equals("Ontario"))
-                throw new Exception("A manual charge cannot be run for Ontario customers.");
-        }
-
         public bool TransactionsContainsChargeOf(decimal price)
         {
             foreach(var transaction in _transactions)
