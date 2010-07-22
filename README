@@ -7,52 +7,6 @@ Roughly based on the user story:
 "A CSR (customer service rep) can manually generate monthly charges 
  for a customer's gym membership."
 
-Quickly draw the entities on a white-board or piece of paper.
-EntityBase
-Gym
-MonthlyPackage
-Customer
-Batch
-Transaction
-Value Object: Address
+The TDD kata instructions have been moved to here:
 
-Treat this as a process exercise for thinking about doing DDD in kata format.
-Once you've done it once, feel free to alter those choices you would do differently.
-
-To encapsulate your collections below:
-a) use field: private IList<T> _myCollection
-b) instantiate in constructor as List<T>
-c) expose read-only property as IEnumerable<T>
-
-The DDD Kata steps:
-1) Gym is an instance of EntityBase.
-2) Two EntityBase instances are equal when both have the same int Id value.
-3) Two EntityBase instances are not equal when each has a different Id value.
-4) Two EntityBase instances are not equal when both have a 0 Id value.
-5) MonthlyPackage is an instance of EntityBase.
-6) Gym has MonthlyPackages.
-7) Adding a MonthlyPackage to Gym increments count.
-8) Adding the same MonthlyPackage throws an exception.
-10) Customer is an instance of EntityBase.
-11) Address MUST have a non-null Street1, City, and Province, or throw an exception.
-12) Two Addresses are the same when they have the same Street1, City and Province.
-      Corollary: Address is not instance of EntityBase.
-13) Customer HAS-A Address.
-14) Customer HAS-A MonthlyPackage.
-15) Customer.PackageName and Customer.PackagePrice properties are wrappers to 
-    Customer.MonthlyPackage properties.
-16) Batch is an instance of EntityBase.
-17) Transaction is an instance of EntityBase.
-18) Batch.Transactions.Count defaults to 0.
-19) Adding a Transaction to Batch increments Count.
-20) Adding the same Transaction to batch throws an Exception.
-21) Adding Transaction with Amount < $10 throws an Exception.
-22) Gym can manually generate monthly charge with method 
-    DoManualMonthlyCharge(Customer customer, DateTime input)
-     a) Gym creates a Batch and adds a Transaction to it, assigning package price 
-        to Transaction's NetAmount.
-     b) after running a new Batch and Transaction record have been created 
-        with Transaction.Amount = Customer.PackagePrice.
-23) Adding a manual charge for a Customer from Ontario throws an exception.
-        
-[end]
+http://codingsolutions.blogspot.com/2010/07/tdd-kata-for-ddd-building-simple-domain.html
